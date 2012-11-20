@@ -12,7 +12,7 @@ Installation
 ------------
 
 ``` script
-gem install easy_validation
+gem install simple_validation
 ```
 
 Usage
@@ -59,17 +59,12 @@ invalid_number = AlienNumber.new(-1, 12)
 invalid_number.valid? # false
 invalid_number.invalid? # true
 invalid_number.errors # ["-1 is negative", "12 is greater than 9"]
-
 ```
 
 Running tests
 -------------
 
 Clone the repository and run the following 'rake' from the repository.
-
-``` script
-rake
-```
 
 License
 -------

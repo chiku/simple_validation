@@ -1,3 +1,10 @@
+# simple_validation.rb
+#
+# Created by Chirantan Mitra on 2012-11-20
+# Copyright 2012.  All rights reserved
+#
+# See LICENSE for license
+#
 module SimpleValidation
   def self.included(base)
     base.class_eval do

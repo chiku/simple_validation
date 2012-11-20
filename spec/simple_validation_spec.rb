@@ -1,3 +1,10 @@
+# simple_validation_spec.rb
+#
+# Created by Chirantan Mitra on 2012-11-20
+# Copyright 2012.  All rights reserved
+#
+# See LICENSE for license
+
 require_relative "spec_helper"
 
 require_relative "../lib/simple_validation"

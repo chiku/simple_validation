@@ -1,3 +1,8 @@
+v0.1.2
+------
+
+* Add documentation
+
 v0.1.1
 ------
 

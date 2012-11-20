@@ -32,7 +32,7 @@ class AlienNumber
   end
 
   def value
-	@digits.reduce(1) {|result, digit| result + digit}
+	@digits.reduce(0) {|result, digit| result + digit}
   end
 
   private
@@ -54,11 +54,13 @@ valid_number = AlienNumber.new(1, 2, 3)
 valid_number.valid? # true
 valid_number.invalid? # false
 valid_number.errors # []
+valid_number.value # 6
 
 invalid_number = AlienNumber.new(-1, 12)
 invalid_number.valid? # false
 invalid_number.invalid? # true
 invalid_number.errors # ["-1 is negative", "12 is greater than 9"]
+invalid_number.value # 11
 ```
 
 Running tests

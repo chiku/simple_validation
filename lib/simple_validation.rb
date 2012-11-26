@@ -99,7 +99,7 @@ module SimpleValidation
 
   # Adds an error to the errors collection
   def add_error(error)
-    errors << error unless errors.include?(error)
+    errors << error
   end
 
   # Adds an array of errors to the errors collection
@@ -109,6 +109,7 @@ module SimpleValidation
 
   # Returns an array of the current errors
   def errors
+    validate
     @errors ||= []
   end
 end

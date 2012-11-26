@@ -2,6 +2,7 @@ Current
 -------
 
 * Don't run validations if the object is already validated
+* #errors validates the object
 
 v0.1.2
 ------

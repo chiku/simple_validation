@@ -109,13 +109,42 @@ describe "A validatable entity" do
         end
       end
     end
+
+    describe "#errors" do
+      before do
+        @entity.errors
+      end
+
+      it "invokes its validations" do
+        @entity.always_valid_invoked_count.must_equal 1
+        @entity.always_invalid_invoked_count.must_equal 1
+      end
+
+      it "has errors added during validation" do
+        @entity.errors.must_equal ["Always invalid"]
+      end
+
+      describe "on another #error" do
+        before do
+          @entity.errors
+        end
+
+        it "doesn't duplicate its errors" do
+          @entity.errors.must_equal ["Always invalid"]
+        end
+
+        it "doesn't re-run validation" do
+          @entity.always_valid_invoked_count.must_equal 1
+          @entity.always_invalid_invoked_count.must_equal 1
+        end
+      end
+    end
   end
 
   describe "with already existing errors" do
     it "doesn't lose its older errors on validation" do
       entity = TestEntityWithValidation.new
       entity.add_errors(["An error", "Another error"])
-      entity.valid?
       entity.errors.sort.must_equal ["An error", "Another error", "Always invalid"].sort
     end
   end

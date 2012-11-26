@@ -13,9 +13,6 @@
 #   class AlienNumber
 #     include SimpleValidation
 #
-#     validate :digits_are_positive
-#     validate :digits_are_less_than_ten
-#
 #     def initialize(*digits)
 #       @digits = digits
 #     end
@@ -79,12 +76,19 @@ module SimpleValidation
     end
   end
 
+  # Run all validations associated with the object
+  def validate # :nodoc:
+    unless @validated
+      @validated = true
+      self.class.validation_methods.each do |method_name|
+        send method_name
+      end
+    end
+  end
+
   # Runs all validations and returns _true_ if the object is valid
   def valid?
-    self.class.validation_methods.each do |method_name|
-      send method_name
-    end
-
+    validate
     errors.empty?
   end
 

@@ -16,29 +16,29 @@ end
 class TestEntityWithValidation
   include SimpleValidation
 
-  attr_reader :always_valid_invoked
-  attr_reader :always_invalid_invoked
+  attr_reader :always_valid_invoked_count
+  attr_reader :always_invalid_invoked_count
 
   validate :always_valid
   validate :always_invalid
 
   def initialize
-    @always_valid_invoked = false
-    @always_invalid_invoked = false
+    @always_valid_invoked_count = 0
+    @always_invalid_invoked_count = 0
   end
 
   def always_valid
-    @always_valid_invoked = true
+    @always_valid_invoked_count += 1
   end
 
   def always_invalid
-    @always_invalid_invoked = true
+    @always_invalid_invoked_count += 1
     add_error "Always invalid"
   end
 end
 
-describe "An entity that can be validated" do
-  describe "when it has errors" do
+describe "A validatable entity" do
+  describe "with an error" do
     before do
       @entity = TestEntity.new
       @entity.add_error("An error")
@@ -55,13 +55,9 @@ describe "An entity that can be validated" do
     it "exposes its errors" do
       @entity.errors.must_equal ["An error"]
     end
-
-    it "allows custom validation" do
-      @entity.errors.must_equal ["An error"]
-    end
   end
 
-  describe "when it doesn't have any error" do
+  describe "whithout any errors" do
     before do
       @entity = TestEntity.new
     end
@@ -79,48 +75,54 @@ describe "An entity that can be validated" do
     end
   end
 
-  describe "when it has a custom validation" do
+  describe "with custom validation" do
     before do
       @entity = TestEntityWithValidation.new
     end
 
-    describe "on validation" do
+    describe "#valid?" do
       before do
         @entity.valid?
       end
 
-      it "invokes the validations" do
-        @entity.always_valid_invoked.must_equal true
-        @entity.always_invalid_invoked.must_equal true
+      it "invokes its validations" do
+        @entity.always_valid_invoked_count.must_equal 1
+        @entity.always_invalid_invoked_count.must_equal 1
       end
 
       it "has errors added during validation" do
         @entity.errors.must_equal ["Always invalid"]
       end
-    end
 
-    describe "with already existing errors" do
-      it "doesn't lose its older errors on validation" do
-        @entity = TestEntityWithValidation.new
-        @entity.add_errors(["An error", "Another error"])
-        @entity.valid?
-        @entity.errors.must_equal ["An error", "Another error", "Always invalid"]
-      end
-    end
+      describe "on another #valid?" do
+        before do
+          @entity.valid?
+        end
 
-    describe "when double validated" do
-      it "doesn't duplicate its errors" do
-        @entity = TestEntityWithValidation.new
-        @entity.valid?
-        @entity.valid?
-        @entity.errors.must_equal ["Always invalid"]
+        it "doesn't duplicate its errors" do
+          @entity.errors.must_equal ["Always invalid"]
+        end
+
+        it "doesn't re-run validation" do
+          @entity.always_valid_invoked_count.must_equal 1
+          @entity.always_invalid_invoked_count.must_equal 1
+        end
       end
     end
   end
 
-  it "can be added an array of errors" do
-    @entity = TestEntity.new
-    @entity.add_errors(["An error", "Another error"])
-    @entity.errors.must_equal ["An error", "Another error"]
+  describe "with already existing errors" do
+    it "doesn't lose its older errors on validation" do
+      entity = TestEntityWithValidation.new
+      entity.add_errors(["An error", "Another error"])
+      entity.valid?
+      entity.errors.sort.must_equal ["An error", "Another error", "Always invalid"].sort
+    end
+  end
+
+  it "can accept multiple errors" do
+    entity = TestEntity.new
+    entity.add_errors(["An error", "Another error"])
+    entity.errors.must_equal ["An error", "Another error"]
   end
 end

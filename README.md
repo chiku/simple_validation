@@ -24,9 +24,6 @@ require "simple_validation"
 class AlienNumber
   include SimpleValidation
 
-  validate :digits_are_positive
-  validate :digits_are_less_than_ten
-
   def initialize(*digits)
     @digits = digits
   end

@@ -1,4 +1,4 @@
-Current
+v0.1.3
 -------
 
 * Don't run validations if the object is already validated

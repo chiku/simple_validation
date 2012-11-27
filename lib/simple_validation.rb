@@ -57,22 +57,23 @@ module SimpleValidation
 
   module ClassMethods
     # Add a validation method
-    # The object to validate be able to invoke the method supplied
+    # The object to validate should be able to invoke the method supplied
+    # You can pass a list of conditions that the object must satisfy for the validations to run
     #
     # Example:
     #   class AlienNumber
     #     include SimpleValidation
     #
     #     validate :digits_are_positive
-    #     validate :digits_are_less_than_ten
+    #     validate :digits_are_less_than_ten, :if => [:digits_count_even?]
     #   end
-    def validate(method_name)
-      validation_methods << method_name
+    def validate(method_name, conditions = {})
+      validation_methods[method_name] = conditions[:if] || []
     end
 
     # The list of all method names that validate the object
     def validation_methods # :nodoc:
-      @validation_methods ||= []
+      @validation_methods ||= {}
     end
   end
 
@@ -80,8 +81,8 @@ module SimpleValidation
   def validate # :nodoc:
     unless @validated
       @validated = true
-      self.class.validation_methods.each do |method_name|
-        send method_name
+      self.class.validation_methods.each do |method_name, conditions|
+        send method_name if conditions.all? { |condition| send condition }
       end
     end
   end

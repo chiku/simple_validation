@@ -37,6 +37,44 @@ class TestEntityWithValidation
   end
 end
 
+class TestEntityWithConditionalValidation
+  include SimpleValidation
+
+  attr_reader :statement_one_invoked_count
+  attr_reader :statement_two_invoked_count
+  attr_reader :statement_three_invoked_count
+
+  validate :statement_one, :if => [:condition_one?]
+  validate :statement_two, :if => [:condition_two?]
+  validate :statement_three, :if => [:condition_one?, :condition_two?]
+
+  def initialize
+    @statement_one_invoked_count = 0
+    @statement_two_invoked_count = 0
+    @statement_three_invoked_count = 0
+  end
+
+  def statement_one
+    @statement_one_invoked_count += 1
+  end
+
+  def statement_two
+    @statement_two_invoked_count += 1
+  end
+
+  def statement_three
+    @statement_three_invoked_count += 1
+  end
+
+  def condition_one?
+    true
+  end
+
+  def condition_two?
+    false
+  end
+end
+
 describe "A validatable entity" do
   describe "with an error" do
     before do
@@ -137,6 +175,30 @@ describe "A validatable entity" do
           @entity.always_valid_invoked_count.must_equal 1
           @entity.always_invalid_invoked_count.must_equal 1
         end
+      end
+    end
+  end
+
+  describe "with conditional validation" do
+    before do
+      @entity = TestEntityWithConditionalValidation.new
+    end
+
+    describe "#valid?" do
+      before do
+        @entity.valid?
+      end
+
+      it "invokes its validations that passes all conditions" do
+        @entity.statement_one_invoked_count.must_equal 1
+      end
+
+      it "doesn't invoke its validations that fail all conditions" do
+        @entity.statement_two_invoked_count.must_equal 0
+      end
+
+      it "doesn't invoke its validations that fail conditions partially" do
+        @entity.statement_three_invoked_count.must_equal 0
       end
     end
   end

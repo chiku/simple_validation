@@ -1,3 +1,8 @@
+v0.1.4
+-------
+
+* Support conditional validations
+
 v0.1.3
 -------
 

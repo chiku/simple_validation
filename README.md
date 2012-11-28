@@ -76,7 +76,7 @@ another_invalid_number.value # 17
 Running tests
 -------------
 
-Clone the repository and run 'rake' from the root directory.
+Clone the repository and run `rake` from the root directory.
 
 Contributing
 ------------

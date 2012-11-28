@@ -76,7 +76,18 @@ another_invalid_number.value # 17
 Running tests
 -------------
 
-Clone the repository and run the following 'rake' from the repository.
+Clone the repository and run 'rake' from the root directory.
+
+Contributing
+------------
+
+* Fork it	  	
+* Create your feature branch (`git checkout -b my-new-feature`)	  	
+* Commit your changes (`git commit -am 'Added some feature'`)	  	
+* Push to the branch (`git push origin my-new-feature`)	  	
+* Create new Pull Request
+
+Any pull request should include tests around it.
 
 License
 -------

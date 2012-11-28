@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.description              = <<-EOS
 A simple way to validate custom ruby objects using validation defined in the class.
 EOS
+  s.license                  = "MIT"
   s.rubyforge_project        = "simple_validation"
   s.files                    = `git ls-files`.split("\n")
   s.test_files               = `git ls-files -- {test}/*`.split("\n")

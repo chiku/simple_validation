@@ -206,14 +206,30 @@ describe "A validatable entity" do
   describe "with already existing errors" do
     it "doesn't lose its older errors on validation" do
       entity = TestEntityWithValidation.new
-      entity.add_errors(["An error", "Another error"])
-      entity.errors.sort.must_equal ["An error", "Another error", "Always invalid"].sort
+      entity.add_error("An error")
+      entity.errors.sort.must_equal ["An error", "Always invalid"].sort
+    end
+
+    it "doesn't duplicate errors" do
+      entity = TestEntityWithValidation.new
+      entity.add_error("An error")
+      entity.add_error("An error")
+      entity.errors.sort.must_equal ["Always invalid", "An error"].sort
     end
   end
 
-  it "can accept multiple errors" do
-    entity = TestEntity.new
-    entity.add_errors(["An error", "Another error"])
-    entity.errors.must_equal ["An error", "Another error"]
+  describe "#add_error" do
+    it "can accept multiple errors" do
+      entity = TestEntity.new
+      entity.add_errors(["An error", "Another error"])
+      entity.errors.sort.must_equal ["An error", "Another error"].sort
+    end
+
+    it "doesn't duplicate errors" do
+      entity = TestEntity.new
+      entity.add_errors(["An error", "Another error"])
+      entity.add_errors(["An error", "Another error"])
+      entity.errors.sort.must_equal ["An error", "Another error"].sort
+    end
   end
 end

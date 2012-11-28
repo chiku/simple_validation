@@ -90,7 +90,7 @@ module SimpleValidation
   # Runs all validations and returns _true_ if the object is valid
   def valid?
     validate
-    errors.empty?
+    all_errors.empty?
   end
 
   # Runs all validations and returns _true_ if the object is invalid
@@ -100,17 +100,24 @@ module SimpleValidation
 
   # Adds an error to the errors collection
   def add_error(error)
-    errors << error
+    all_errors << error
   end
 
   # Adds an array of errors to the errors collection
   def add_errors(more_errors)
-    errors.concat(more_errors)
+    all_errors.concat(more_errors)
   end
 
   # Returns an array of the current errors
   def errors
     validate
-    @errors ||= []
+    all_errors
   end
+
+  def all_errors # :nodoc:
+    @errors ||= []
+    @errors.uniq!
+    @errors
+  end
+  private :all_errors
 end

@@ -5,9 +5,9 @@
 #
 # See LICENSE for license
 
-require_relative "spec_helper"
+require File.expand_path("spec_helper", File.dirname(__FILE__))
 
-require_relative "../lib/simple_validation"
+require File.expand_path("../lib/simple_validation", File.dirname(__FILE__))
 
 class TestEntity
   include SimpleValidation

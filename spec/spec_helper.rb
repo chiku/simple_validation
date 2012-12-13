@@ -5,5 +5,12 @@
 #
 # See LICENSE for license
 
+begin
+  require 'simplecov'
+  SimpleCov.start
+rescue LoadError
+  puts "\nPlease install simplecov to generate coverage report!\n\n"
+end
+
 require "minitest/autorun"
 require "minitest/spec"

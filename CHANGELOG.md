@@ -1,3 +1,9 @@
+Current
+-------
+
+* Continuous build with travis
+* Generate coverage report
+
 v0.1.5
 -------
 

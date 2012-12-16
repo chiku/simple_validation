@@ -1,2 +1,3 @@
 simple_validation-*.gem
 coverage
+Gemfile.lock

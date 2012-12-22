@@ -83,13 +83,11 @@ Clone the repository and run `rake` from the root directory.
 Contributing
 ------------
 
-* Fork it	  	
-* Create your feature branch (`git checkout -b my-new-feature`)	  	
-* Commit your changes (`git commit -am 'Added some feature'`)	  	
-* Push to the branch (`git push origin my-new-feature`)	  	
-* Create new Pull Request
-
-Any pull request should include tests around it.
+* Fork the project.
+* Make your feature addition or bug fix.
+* Add tests for it. This is important so I don't break it in a future version unintentionally.
+* Commit, but do not mess with the VERSION. If you want to have your own version, that is fine but bump the version in a commit by itself in another branch so I can ignore it when I pull.
+* Send me a pull request.
 
 License
 -------

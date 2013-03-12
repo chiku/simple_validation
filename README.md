@@ -1,5 +1,5 @@
 [![Build Status](https://secure.travis-ci.org/chiku/simple_validation.png?branch=master)](https://travis-ci.org/chiku/simple_validation)
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/chiku/simple_validation)
+[![Code Climate](https://codeclimate.com/github/chiku/simple_validation.png)](https://codeclimate.com/github/chiku/simple_validation)
 
 Overview
 --------

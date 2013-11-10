@@ -80,10 +80,10 @@ module SimpleValidation
   # Run all validations associated with the object
   def validate # :nodoc:
     unless @validated ||= false
+      @validated = true
       self.class.validation_methods.each do |method_name, conditions|
         send method_name if conditions.all? { |condition| send condition }
       end
-      @validated = true
     end
   end
 

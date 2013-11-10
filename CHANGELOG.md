@@ -3,6 +3,7 @@ Current
 
 * Continuous build with travis
 * Generate coverage report
+* Ensure the gem code passes tests without warning
 
 v0.1.5
 -------

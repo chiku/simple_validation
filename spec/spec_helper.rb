@@ -8,7 +8,7 @@
 begin
   require 'simplecov'
   SimpleCov.start do
-    add_filter "/spec/"
+    add_filter "/spec|test|vendor/"
   end
 rescue LoadError
   puts "\nPlease install simplecov to generate coverage report!\n\n"

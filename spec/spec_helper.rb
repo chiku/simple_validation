@@ -7,11 +7,16 @@
 
 begin
   require 'simplecov'
+  require 'coveralls'
+  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+    SimpleCov::Formatter::HTMLFormatter,
+    Coveralls::SimpleCov::Formatter
+  ]
   SimpleCov.start do
     add_filter "/spec|test|vendor/"
   end
 rescue LoadError
-  puts "\nPlease install simplecov to generate coverage report!\n\n"
+  puts "\nPlease install simplecov & coveralls to generate coverage report!\n\n"
 end
 
 require "minitest/autorun"

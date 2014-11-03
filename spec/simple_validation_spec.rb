@@ -44,9 +44,9 @@ class TestEntityWithConditionalValidation
   attr_reader :statement_two_invoked_count
   attr_reader :statement_three_invoked_count
 
-  validate :statement_one, :if => [:condition_one?]
-  validate :statement_two, :if => [:condition_two?]
-  validate :statement_three, :if => [:condition_one?, :condition_two?]
+  validate :statement_one, :if => [:always_true?]
+  validate :statement_two, :if => [:always_false?]
+  validate :statement_three, :if => [:always_true?, :always_false?]
 
   def initialize
     @statement_one_invoked_count = 0
@@ -66,170 +66,152 @@ class TestEntityWithConditionalValidation
     @statement_three_invoked_count += 1
   end
 
-  def condition_one?
+  def always_true?
     true
   end
 
-  def condition_two?
+  def always_false?
     false
   end
 end
 
 describe "A validatable entity" do
   describe "with an error" do
-    before do
-      @entity = TestEntity.new
-      @entity.add_error("An error")
-    end
+    subject { TestEntity.new }
+    before  { subject.add_error("An error") }
 
     it "is invalid" do
-      @entity.invalid?.must_equal true
+      subject.invalid?.must_equal true
     end
 
     it "is not valid" do
-      @entity.valid?.must_equal false
+      subject.valid?.must_equal false
     end
 
     it "exposes its errors" do
-      @entity.errors.must_equal ["An error"]
+      subject.errors.must_equal ["An error"]
     end
   end
 
   describe "whithout any errors" do
-    before do
-      @entity = TestEntity.new
-    end
+    subject { TestEntity.new }
 
     it "is not invalid" do
-      @entity.invalid?.must_equal false
+      subject.invalid?.must_equal false
     end
 
     it "is valid" do
-      @entity.valid?.must_equal true
+      subject.valid?.must_equal true
     end
 
     it "exposes its errors as an empty array" do
-      @entity.errors.must_equal []
+      subject.errors.must_equal []
     end
   end
 
   describe "with custom validation" do
-    before do
-      @entity = TestEntityWithValidation.new
-    end
+    subject { TestEntityWithValidation.new }
 
     describe "#valid?" do
-      before do
-        @entity.valid?
-      end
+      before { subject.valid? }
 
       it "invokes its validations" do
-        @entity.always_valid_invoked_count.must_equal 1
-        @entity.always_invalid_invoked_count.must_equal 1
+        subject.always_valid_invoked_count.must_equal 1
+        subject.always_invalid_invoked_count.must_equal 1
       end
 
       it "has errors added during validation" do
-        @entity.errors.must_equal ["Always invalid"]
+        subject.errors.must_equal ["Always invalid"]
       end
 
       describe "on another #valid?" do
-        before do
-          @entity.valid?
-        end
+        before { subject.valid? }
 
         it "doesn't duplicate its errors" do
-          @entity.errors.must_equal ["Always invalid"]
+          subject.errors.must_equal ["Always invalid"]
         end
 
         it "doesn't re-run validation" do
-          @entity.always_valid_invoked_count.must_equal 1
-          @entity.always_invalid_invoked_count.must_equal 1
+          subject.always_valid_invoked_count.must_equal 1
+          subject.always_invalid_invoked_count.must_equal 1
         end
       end
     end
 
     describe "#errors" do
-      before do
-        @entity.errors
-      end
+      before { subject.errors }
 
       it "invokes its validations" do
-        @entity.always_valid_invoked_count.must_equal 1
-        @entity.always_invalid_invoked_count.must_equal 1
+        subject.always_valid_invoked_count.must_equal 1
+        subject.always_invalid_invoked_count.must_equal 1
       end
 
       it "has errors added during validation" do
-        @entity.errors.must_equal ["Always invalid"]
+        subject.errors.must_equal ["Always invalid"]
       end
 
       describe "on another #error" do
-        before do
-          @entity.errors
-        end
+        before { subject.errors }
 
         it "doesn't duplicate its errors" do
-          @entity.errors.must_equal ["Always invalid"]
+          subject.errors.must_equal ["Always invalid"]
         end
 
         it "doesn't re-run validation" do
-          @entity.always_valid_invoked_count.must_equal 1
-          @entity.always_invalid_invoked_count.must_equal 1
+          subject.always_valid_invoked_count.must_equal 1
+          subject.always_invalid_invoked_count.must_equal 1
         end
       end
     end
   end
 
   describe "with conditional validation" do
-    before do
-      @entity = TestEntityWithConditionalValidation.new
-    end
+    subject { TestEntityWithConditionalValidation.new }
 
     describe "#valid?" do
-      before do
-        @entity.valid?
-      end
+      before { subject.valid? }
 
       it "invokes its validations that passes all conditions" do
-        @entity.statement_one_invoked_count.must_equal 1
+        subject.statement_one_invoked_count.must_equal 1
       end
 
       it "doesn't invoke its validations that fail all conditions" do
-        @entity.statement_two_invoked_count.must_equal 0
+        subject.statement_two_invoked_count.must_equal 0
       end
 
       it "doesn't invoke its validations that fail conditions partially" do
-        @entity.statement_three_invoked_count.must_equal 0
+        subject.statement_three_invoked_count.must_equal 0
       end
     end
   end
 
   describe "with already existing errors" do
+    subject { TestEntityWithValidation.new }
+
     it "doesn't lose its older errors on validation" do
-      entity = TestEntityWithValidation.new
-      entity.add_error("An error")
-      entity.errors.sort.must_equal ["An error", "Always invalid"].sort
+      subject.add_error("An error")
+      subject.errors.sort.must_equal ["An error", "Always invalid"].sort
     end
 
     it "doesn't duplicate errors" do
-      entity = TestEntityWithValidation.new
-      entity.add_error("An error")
-      entity.add_error("An error")
-      entity.errors.sort.must_equal ["Always invalid", "An error"].sort
+      subject.add_error("An error")
+      subject.add_error("An error")
+      subject.errors.sort.must_equal ["Always invalid", "An error"].sort
     end
   end
 
   describe "#add_error" do
+    subject { TestEntity.new }
+
     it "can accept multiple errors" do
-      entity = TestEntity.new
-      entity.add_errors(["An error", "Another error"])
-      entity.errors.sort.must_equal ["An error", "Another error"].sort
+      subject.add_errors(["An error", "Another error"])
+      subject.errors.sort.must_equal ["An error", "Another error"].sort
     end
 
     it "doesn't duplicate errors" do
-      entity = TestEntity.new
-      entity.add_errors(["An error", "Another error"])
-      entity.add_errors(["An error", "Another error"])
-      entity.errors.sort.must_equal ["An error", "Another error"].sort
+      subject.add_errors(["An error", "Another error"])
+      subject.add_errors(["An error", "Another error"])
+      subject.errors.sort.must_equal ["An error", "Another error"].sort
     end
   end
 end

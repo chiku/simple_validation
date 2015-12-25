@@ -5,6 +5,6 @@
 #
 # See LICENSE for license
 
-module SimpleValidation
-  VERSION = "0.1.6"
+module SimpleValidation # :nodoc:
+  VERSION = '0.1.6'
 end

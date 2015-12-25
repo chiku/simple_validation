@@ -48,17 +48,18 @@
 #   invalid_number.errors # ["-1 is negative", "12 is greater than 9"]
 #   invalid_number.value # 11
 
-module SimpleValidation
+module SimpleValidation # :nodoc:
   def self.included(base) # :nodoc:
     base.class_eval do
       base.extend SimpleValidation::ClassMethods
     end
   end
 
-  module ClassMethods
+  module ClassMethods # :nodoc:
     # Add a validation method
     # The object to validate should be able to invoke the method supplied
-    # You can pass a list of conditions that the object must satisfy for the validations to run
+    # You can pass a list of conditions that the object must satisfy for
+    # the validations to run
     #
     # Example:
     #   class AlienNumber
@@ -79,11 +80,10 @@ module SimpleValidation
 
   # Run all validations associated with the object
   def validate # :nodoc:
-    unless @validated ||= false
-      @validated = true
-      self.class.validation_methods.each do |method_name, conditions|
-        send method_name if conditions.all? { |condition| send condition }
-      end
+    return if @validated ||= false
+    @validated = true
+    self.class.validation_methods.each do |method_name, conditions|
+      send method_name if conditions.all? { |condition| send condition }
     end
   end
 
@@ -95,7 +95,7 @@ module SimpleValidation
 
   # Runs all validations and returns _true_ if the object is invalid
   def invalid?
-    not valid?
+    !valid?
   end
 
   # Adds an error to the errors collection

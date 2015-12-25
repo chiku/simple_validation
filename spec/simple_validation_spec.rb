@@ -5,9 +5,9 @@
 #
 # See LICENSE for license
 
-require File.expand_path("spec_helper", File.dirname(__FILE__))
+require File.expand_path('spec_helper', File.dirname(__FILE__))
 
-require File.expand_path("../lib/simple_validation", File.dirname(__FILE__))
+require File.expand_path('../lib/simple_validation', File.dirname(__FILE__))
 
 class TestEntity
   include SimpleValidation
@@ -33,7 +33,7 @@ class TestEntityWithValidation
 
   def always_invalid
     @always_invalid_invoked_count += 1
-    add_error "Always invalid"
+    add_error 'Always invalid'
   end
 end
 
@@ -44,9 +44,9 @@ class TestEntityWithConditionalValidation
   attr_reader :statement_two_invoked_count
   attr_reader :statement_three_invoked_count
 
-  validate :statement_one, :if => [:always_true?]
-  validate :statement_two, :if => [:always_false?]
-  validate :statement_three, :if => [:always_true?, :always_false?]
+  validate :statement_one, if: [:always_true?]
+  validate :statement_two, if: [:always_false?]
+  validate :statement_three, if: [:always_true?, :always_false?]
 
   def initialize
     @statement_one_invoked_count = 0
@@ -75,60 +75,60 @@ class TestEntityWithConditionalValidation
   end
 end
 
-describe "A validatable entity" do
-  describe "with an error" do
+describe 'A validatable entity' do
+  describe 'with an error' do
     subject { TestEntity.new }
-    before  { subject.add_error("An error") }
+    before  { subject.add_error('An error') }
 
-    it "is invalid" do
+    it 'is invalid' do
       subject.invalid?.must_equal true
     end
 
-    it "is not valid" do
+    it 'is not valid' do
       subject.valid?.must_equal false
     end
 
-    it "exposes its errors" do
-      subject.errors.must_equal ["An error"]
+    it 'exposes its errors' do
+      subject.errors.must_equal ['An error']
     end
   end
 
-  describe "whithout any errors" do
+  describe 'whithout any errors' do
     subject { TestEntity.new }
 
-    it "is not invalid" do
+    it 'is not invalid' do
       subject.invalid?.must_equal false
     end
 
-    it "is valid" do
+    it 'is valid' do
       subject.valid?.must_equal true
     end
 
-    it "exposes its errors as an empty array" do
+    it 'exposes its errors as an empty array' do
       subject.errors.must_equal []
     end
   end
 
-  describe "with custom validation" do
+  describe 'with custom validation' do
     subject { TestEntityWithValidation.new }
 
-    describe "#valid?" do
+    describe '#valid?' do
       before { subject.valid? }
 
-      it "invokes its validations" do
+      it 'invokes its validations' do
         subject.always_valid_invoked_count.must_equal 1
         subject.always_invalid_invoked_count.must_equal 1
       end
 
-      it "has errors added during validation" do
-        subject.errors.must_equal ["Always invalid"]
+      it 'has errors added during validation' do
+        subject.errors.must_equal ['Always invalid']
       end
 
-      describe "on another #valid?" do
+      describe 'on another #valid?' do
         before { subject.valid? }
 
         it "doesn't duplicate its errors" do
-          subject.errors.must_equal ["Always invalid"]
+          subject.errors.must_equal ['Always invalid']
         end
 
         it "doesn't re-run validation" do
@@ -138,23 +138,23 @@ describe "A validatable entity" do
       end
     end
 
-    describe "#errors" do
+    describe '#errors' do
       before { subject.errors }
 
-      it "invokes its validations" do
+      it 'invokes its validations' do
         subject.always_valid_invoked_count.must_equal 1
         subject.always_invalid_invoked_count.must_equal 1
       end
 
-      it "has errors added during validation" do
-        subject.errors.must_equal ["Always invalid"]
+      it 'has errors added during validation' do
+        subject.errors.must_equal ['Always invalid']
       end
 
-      describe "on another #error" do
+      describe 'on another #error' do
         before { subject.errors }
 
         it "doesn't duplicate its errors" do
-          subject.errors.must_equal ["Always invalid"]
+          subject.errors.must_equal ['Always invalid']
         end
 
         it "doesn't re-run validation" do
@@ -165,13 +165,13 @@ describe "A validatable entity" do
     end
   end
 
-  describe "with conditional validation" do
+  describe 'with conditional validation' do
     subject { TestEntityWithConditionalValidation.new }
 
-    describe "#valid?" do
+    describe '#valid?' do
       before { subject.valid? }
 
-      it "invokes its validations that passes all conditions" do
+      it 'invokes its validations that passes all conditions' do
         subject.statement_one_invoked_count.must_equal 1
       end
 
@@ -185,33 +185,33 @@ describe "A validatable entity" do
     end
   end
 
-  describe "with already existing errors" do
+  describe 'with already existing errors' do
     subject { TestEntityWithValidation.new }
 
     it "doesn't lose its older errors on validation" do
-      subject.add_error("An error")
-      subject.errors.sort.must_equal ["An error", "Always invalid"].sort
+      subject.add_error('An error')
+      subject.errors.sort.must_equal ['An error', 'Always invalid'].sort
     end
 
     it "doesn't duplicate errors" do
-      subject.add_error("An error")
-      subject.add_error("An error")
-      subject.errors.sort.must_equal ["Always invalid", "An error"].sort
+      subject.add_error('An error')
+      subject.add_error('An error')
+      subject.errors.sort.must_equal ['Always invalid', 'An error'].sort
     end
   end
 
-  describe "#add_error" do
+  describe '#add_error' do
     subject { TestEntity.new }
 
-    it "can accept multiple errors" do
-      subject.add_errors(["An error", "Another error"])
-      subject.errors.sort.must_equal ["An error", "Another error"].sort
+    it 'can accept multiple errors' do
+      subject.add_errors(['An error', 'Another error'])
+      subject.errors.sort.must_equal ['An error', 'Another error'].sort
     end
 
     it "doesn't duplicate errors" do
-      subject.add_errors(["An error", "Another error"])
-      subject.add_errors(["An error", "Another error"])
-      subject.errors.sort.must_equal ["An error", "Another error"].sort
+      subject.add_errors(['An error', 'Another error'])
+      subject.add_errors(['An error', 'Another error'])
+      subject.errors.sort.must_equal ['An error', 'Another error'].sort
     end
   end
 end

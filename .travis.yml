@@ -7,4 +7,4 @@ rvm:
   - "jruby"
 before_install:
   - gem update --system
-  - bundle clean --force || exit 0
+  - bundle clean --force

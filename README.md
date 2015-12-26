@@ -12,7 +12,8 @@ This is very simple gem to allow custom validations in a ruby object. You are su
 Dependencies
 ------------
 
-These are no runtime dependencies for this gem. You need minitest to run the tests for this gem.
+There are no runtime dependencies for this gem. This gem runs with ruby 1.9+ or compatible versions. Ruby 1.8 isn't supported.
+Please use version 0.1.6 og simple_validation if you wish to use ruby 1.8.
 
 Installation
 ------------
@@ -82,7 +83,9 @@ another_invalid_number.value # 17
 Running tests
 -------------
 
-Clone the repository and run `rake` from the root directory.
+1. Clone the repository.
+2. run `bundle` from the root directory.
+3. run `rake` from the root directory.
 
 Contributing
 ------------

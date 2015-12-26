@@ -1,3 +1,9 @@
+v0.2.1
+------
+
+* Drop support for ruby 1.8
+* Style - pass rubocop style checks
+
 v0.1.6
 ------
 

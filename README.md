@@ -13,7 +13,7 @@ Dependencies
 ------------
 
 There are no runtime dependencies for this gem. This gem runs with ruby 1.9+ or compatible versions. Ruby 1.8 isn't supported.
-Please use version 0.1.6 og simple_validation if you wish to use ruby 1.8.
+Please use version 0.1.6 of simple_validation if you wish to use ruby 1.8.
 
 Installation
 ------------

@@ -18,15 +18,15 @@ Please use version 0.1.6 of simple_validation if you wish to use ruby 1.8.
 Installation
 ------------
 
-``` script
+```script
 gem install simple_validation
 ```
 
 Usage
 ------
 
-``` ruby
-require "simple_validation"
+```ruby
+require 'simple_validation'
 
 class AlienNumber
   include SimpleValidation

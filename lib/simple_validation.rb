@@ -4,10 +4,11 @@
 # Copyright 2012-2016. All rights reserved
 #
 # See LICENSE for license
+
+##
+# <b>Add methods to validate a plain ruby object</b>
 #
-# This module adds methods to easily validate a plain ruby object
-#
-# Example:
+# == Examples
 #   require "simple_validation"
 #
 #   class AlienNumber
@@ -47,8 +48,7 @@
 #   invalid_number.invalid? # true
 #   invalid_number.errors # ["-1 is negative", "12 is greater than 9"]
 #   invalid_number.value # 11
-
-module SimpleValidation # :nodoc:
+module SimpleValidation
   def self.included(base) # :nodoc:
     base.class_eval do
       base.extend SimpleValidation::ClassMethods
@@ -56,6 +56,7 @@ module SimpleValidation # :nodoc:
   end
 
   module ClassMethods # :nodoc:
+    ##
     # Add a validation method
     # The object to validate should be able to invoke the method supplied
     # You can pass a list of conditions that the object must satisfy for
@@ -72,6 +73,7 @@ module SimpleValidation # :nodoc:
       validation_methods[method_name] = conditions[:if] || []
     end
 
+    ##
     # The list of all method names that validate the object
     def validation_methods # :nodoc:
       @validation_methods ||= {}
@@ -87,27 +89,32 @@ module SimpleValidation # :nodoc:
     end
   end
 
+  ##
   # Runs all validations and returns _true_ if the object is valid
   def valid?
     validate
     all_errors.empty?
   end
 
+  ##
   # Runs all validations and returns _true_ if the object is invalid
   def invalid?
     !valid?
   end
 
+  ##
   # Adds an error to the errors collection
   def add_error(error)
     all_errors << error
   end
 
+  ##
   # Adds an array of errors to the errors collection
-  def add_errors(more_errors)
-    all_errors.concat(more_errors)
+  def add_errors(errors)
+    all_errors.concat(errors)
   end
 
+  ##
   # Returns an array of the current errors
   def errors
     validate

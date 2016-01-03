@@ -1,3 +1,8 @@
+current
+-------
+
+* Generate rdoc documentation on rake
+
 v0.2.1
 ------
 

@@ -29,4 +29,5 @@ EOS
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'rubocop'
   s.add_development_dependency 'coveralls'
+  s.add_development_dependency 'rdoc'
 end

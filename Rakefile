@@ -1,11 +1,20 @@
+gem 'rdoc'
+
 require 'bundler/gem_tasks'
 require 'rake/testtask'
 require 'rubocop/rake_task'
+require 'rdoc/task'
 
-Rake::TestTask.new do |t|
-  t.pattern = 'spec/*_spec.rb'
+Rake::TestTask.new(:test) do |t|
+  t.pattern = 'spec/**/*_spec.rb'
 end
 
 RuboCop::RakeTask.new(:lint)
 
-task default: [:lint, :test]
+RDoc::Task.new(:rdoc) do |rdoc|
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.main = 'README.md'
+  rdoc.rdoc_files.include('README.md', 'CHANGELOG.md', 'lib/**/*.rb')
+end
+
+task default: [:lint, :test, :rdoc]

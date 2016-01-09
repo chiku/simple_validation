@@ -58,9 +58,7 @@ module SimpleValidation
     end
   end
 
-  ##
-  # _SimpleValiation::ClassMethod_ is extended when _SimpleValiation_ is
-  # included
+  # @api private
   module ClassMethods
     ##
     # Add a validation method
@@ -96,8 +94,6 @@ module SimpleValidation
 
   ##
   # Runs validations if not already run and returns _true_ if valid
-  #
-  # @return [true, false]
   def valid?
     validate
     all_errors.empty?
@@ -105,8 +101,6 @@ module SimpleValidation
 
   ##
   # Runs validations if not already run and returns _true_ if invalid
-  #
-  # @return [true, false]
   def invalid?
     !valid?
   end
@@ -122,7 +116,7 @@ module SimpleValidation
   ##
   # Adds a list of errors to the errors collection
   #
-  # @param errors [Array[String]] error messages
+  # @param errors [Array<String>] error messages
   def add_errors(errors)
     all_errors.concat(errors)
   end
@@ -130,7 +124,7 @@ module SimpleValidation
   ##
   # Runs validations if not already run and returns a list of errors
   #
-  # @return [Array[String]] list of errors
+  # @return [Array<String>] list of errors
   def errors
     validate
     all_errors

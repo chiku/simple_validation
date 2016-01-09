@@ -1,7 +1,7 @@
 current
 -------
 
-* Generate rdoc documentation on rake
+* Generate yard documentation on rake
 
 v0.2.1
 ------

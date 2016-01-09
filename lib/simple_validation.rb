@@ -48,14 +48,20 @@
 #   invalid_number.invalid? # true
 #   invalid_number.errors # ["-1 is negative", "12 is greater than 9"]
 #   invalid_number.value # 11
+
+##
+# Include SimpleValidation to add methods for validating ruby objects
 module SimpleValidation
-  def self.included(base) # :nodoc:
+  def self.included(base)
     base.class_eval do
       base.extend SimpleValidation::ClassMethods
     end
   end
 
-  module ClassMethods # :nodoc:
+  ##
+  # _SimpleValiation::ClassMethod_ is extended when _SimpleValiation_ is
+  # included
+  module ClassMethods
     ##
     # Add a validation method
     # The object to validate should be able to invoke the method supplied
@@ -73,15 +79,14 @@ module SimpleValidation
       validation_methods[method_name] = conditions[:if] || []
     end
 
-    ##
     # The list of all method names that validate the object
-    def validation_methods # :nodoc:
+    def validation_methods
       @validation_methods ||= {}
     end
   end
 
   # Run all validations associated with the object
-  def validate # :nodoc:
+  def validate
     return if @validated ||= false
     @validated = true
     self.class.validation_methods.each do |method_name, conditions|
@@ -90,38 +95,48 @@ module SimpleValidation
   end
 
   ##
-  # Runs all validations and returns _true_ if the object is valid
+  # Runs validations if not already run and returns _true_ if valid
+  #
+  # @return [true, false]
   def valid?
     validate
     all_errors.empty?
   end
 
   ##
-  # Runs all validations and returns _true_ if the object is invalid
+  # Runs validations if not already run and returns _true_ if invalid
+  #
+  # @return [true, false]
   def invalid?
     !valid?
   end
 
   ##
   # Adds an error to the errors collection
+  #
+  # @param error [String] error message
   def add_error(error)
     all_errors << error
   end
 
   ##
-  # Adds an array of errors to the errors collection
+  # Adds a list of errors to the errors collection
+  #
+  # @param errors [Array[String]] error messages
   def add_errors(errors)
     all_errors.concat(errors)
   end
 
   ##
-  # Returns an array of the current errors
+  # Runs validations if not already run and returns a list of errors
+  #
+  # @return [Array[String]] list of errors
   def errors
     validate
     all_errors
   end
 
-  def all_errors # :nodoc:
+  def all_errors
     @errors ||= []
     @errors.uniq!
     @errors

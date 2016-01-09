@@ -1,6 +1,7 @@
 **/*.gem
-coverage
+coverage/
 Gemfile.lock
-.bundle
-vendor
-rdoc
+.bundle/
+vendor/
+doc/
+.yardoc/

@@ -1,4 +1,5 @@
-[![Build Status](https://secure.travis-ci.org/chiku/simple_validation.png?branch=master)](https://travis-ci.org/chiku/simple_validation)
+![Build Status](https://github.com/chiku/simple_validation/actions/workflows/build.yml/badge.svg)
+[![Build Status](https://travis-ci.com/chiku/simple_validation.svg?branch=master)](https://travis-ci.com/chiku/simple_validation)
 [![Gem Version](https://badge.fury.io/rb/simple_validation.svg)](http://badge.fury.io/rb/simple_validation)
 [![Code Climate](https://codeclimate.com/github/chiku/simple_validation.png)](https://codeclimate.com/github/chiku/simple_validation)
 [![Coverage Status](https://coveralls.io/repos/chiku/simple_validation/badge.png?branch=master)](https://coveralls.io/r/chiku/simple_validation?branch=master)

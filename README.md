@@ -1,5 +1,4 @@
 [![Build Status](https://secure.travis-ci.org/chiku/simple_validation.png?branch=master)](https://travis-ci.org/chiku/simple_validation)
-[![Build Status](https://drone.io/github.com/chiku/simple_validation/status.png)](https://drone.io/github.com/chiku/simple_validation/latest)
 [![Gem Version](https://badge.fury.io/rb/simple_validation.svg)](http://badge.fury.io/rb/simple_validation)
 [![Code Climate](https://codeclimate.com/github/chiku/simple_validation.png)](https://codeclimate.com/github/chiku/simple_validation)
 [![Coverage Status](https://coveralls.io/repos/chiku/simple_validation/badge.png?branch=master)](https://coveralls.io/r/chiku/simple_validation?branch=master)
@@ -85,16 +84,7 @@ Running tests
 
 1. Clone the repository.
 2. run `bundle` from the root directory.
-3. run `rake` from the root directory.
-
-Contributing
-------------
-
-* Fork the project.
-* Make your feature addition or bug fix.
-* Add tests for it. This is important so I don't break it in a future version unintentionally.
-* Commit, but do not mess with the VERSION. If you want to have your own version, that is fine but bump the version in a commit by itself in another branch so I can ignore it when I pull.
-* Send me a pull request.
+3. run `bundle rake` from the root directory.
 
 License
 -------

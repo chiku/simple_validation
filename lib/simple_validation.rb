@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 # simple_validation.rb
 #
 # Created by Chirantan Mitra on 2012-11-20
-# Copyright 2012-2016. All rights reserved
+# Copyright 2012-2021. All rights reserved
 #
 # See LICENSE for license
 
@@ -52,9 +54,10 @@
 ##
 # Include SimpleValidation to add methods for validating ruby objects
 module SimpleValidation
+  # @api private
   def self.included(base)
     base.class_eval do
-      base.extend SimpleValidation::ClassMethods
+      base.extend(::SimpleValidation::ClassMethods)
     end
   end
 
@@ -86,9 +89,10 @@ module SimpleValidation
   # Run all validations associated with the object
   def validate
     return if @validated ||= false
+
     @validated = true
     self.class.validation_methods.each do |method_name, conditions|
-      send method_name if conditions.all? { |condition| send condition }
+      public_send(method_name) if conditions.all? { |condition| public_send(condition) }
     end
   end
 
@@ -130,10 +134,11 @@ module SimpleValidation
     all_errors
   end
 
+  private
+
   def all_errors
     @errors ||= []
     @errors.uniq!
     @errors
   end
-  private :all_errors
 end

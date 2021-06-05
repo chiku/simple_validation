@@ -29,7 +29,7 @@ test_files = ::Dir.glob('spec/**/*')
   s.require_paths     = ['lib']
   s.required_ruby_version = '>= 2.5'
 
-  s.add_development_dependency('coveralls')
+  s.add_development_dependency('coveralls_reborn')
   s.add_development_dependency('minitest')
   s.add_development_dependency('rake')
   s.add_development_dependency('rubocop')

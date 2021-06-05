@@ -2,6 +2,7 @@ current
 -------
 
 * Generate yard documentation on rake
+* Drop support for ruby 1.9 to 2.4
 
 v0.2.1
 ------

@@ -1,4 +1,4 @@
-# Copyright 2012-2021. All rights reserved
+# Copyright 2012-2024. All rights reserved
 #
 # See LICENSE for license
 
@@ -9,8 +9,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'simple_validation/version'
 
-files      = ::Dir.glob('lib/**/*') + %w[LICENSE README.md CHANGELOG.md]
-test_files = ::Dir.glob('spec/**/*')
+files = ::Dir.glob('lib/**/*') + %w[LICENSE README.md CHANGELOG.md]
 
 ::Gem::Specification.new do |s|
   s.name              = 'simple_validation'
@@ -25,16 +24,7 @@ test_files = ::Dir.glob('spec/**/*')
   s.license           = 'MIT'
   s.rubyforge_project = 'simple_validation'
   s.files             = files
-  s.test_files        = test_files
   s.require_paths     = ['lib']
   s.required_ruby_version = '>= 2.5'
-
-  s.add_development_dependency('coveralls_reborn')
-  s.add_development_dependency('minitest')
-  s.add_development_dependency('rake')
-  s.add_development_dependency('rubocop')
-  s.add_development_dependency('rubocop-minitest')
-  s.add_development_dependency('rubocop-rake')
-  s.add_development_dependency('simplecov')
-  s.add_development_dependency('yard')
+  s.metadata['rubygems_mfa_required'] = 'true'
 end

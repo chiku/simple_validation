@@ -15,4 +15,7 @@ Metrics/ModuleLength:
     - 'spec/**/*.rb'
 
 Style/Copyright:
-  Notice: '# Copyright 2012\-2021\. All rights reserved'
+  Notice: '# Copyright 2012\-2024\. All rights reserved'
+
+Bundler/GemComment:
+  Enabled: false

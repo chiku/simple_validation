@@ -10,7 +10,7 @@
 ##
 # Include SimpleValidation to add methods for validating ruby objects
 module SimpleValidation
-  VERSION = '0.2.1'
+  VERSION = '0.3.0'
 
   public_constant :VERSION
 end

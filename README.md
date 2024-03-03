@@ -38,21 +38,21 @@ class AlienNumber
   end
 
   def value
-	@digits.reduce(0) {|result, digit| result + digit}
+    @digits.reduce(0) {|result, digit| result + digit}
   end
 
   private
 
   def digits_are_positive
-	@digits.each do |digit|
-	  add_error("#{digit} is negative") unless digit > 0
-	end
+    @digits.each do |digit|
+      add_error("#{digit} is negative") unless digit > 0
+    end
   end
 
   def digits_are_less_than_ten
-	@digits.each do |digit|
-	  add_error("#{digit} is greater than 9") unless digit < 10
-	end
+    @digits.each do |digit|
+      add_error("#{digit} is greater than 9") unless digit < 10
+    end
   end
 
   def digits_count_even?

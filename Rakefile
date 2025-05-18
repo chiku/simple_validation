@@ -1,4 +1,4 @@
-# Copyright 2012-2024. All rights reserved
+# Copyright 2012-2025. All rights reserved
 #
 # See LICENSE for license
 
